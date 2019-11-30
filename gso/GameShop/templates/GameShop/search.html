@@ -1,0 +1,5 @@
+<ul>
+{% for element in results %}
+    <li><a href="{% url 'GameShop:news_detail' %}" {{ element.name }}</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="70007011-b93f-4f76-8921-74bf01639d26" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" module-name="gso" is-module-sdk="true">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+    <option name="myUseModuleSdk" value="true" />
+    <option name="myModuleName" value="gso" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="gso" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1SvGVd3CWA26oGUDBXg62Jy7GP8" />
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/dreamerteam" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Zhuma\PycharmProjects\gso\GameShop\templates\GameShop" />
+      <recent name="C:\Users\Zhuma\PycharmProjects\gso\GameShop\static\GameShop" />
+      <recent name="C:\Users\Zhuma\PycharmProjects\gso\UserApp\templates" />
+      <recent name="C:\Users\Zhuma\PycharmProjects\gso\GameShop" />
+      <recent name="C:\Users\Zhuma\PycharmProjects\gso\users\templates\users" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="gso" type="Python.DjangoServer" factoryName="Django server">
+      <module name="gso" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="gso.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="70007011-b93f-4f76-8921-74bf01639d26" name="Default Changelist" comment="" />
+      <created>1572436680903</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572436680903</updated>
+      <workItem from="1572436841206" duration="2713000" />
+      <workItem from="1572454732318" duration="6000" />
+      <workItem from="1572927638710" duration="1392000" />
+      <workItem from="1572972646166" duration="6387000" />
+      <workItem from="1573016884190" duration="5344000" />
+      <workItem from="1573035737468" duration="2066000" />
+      <workItem from="1573038907076" duration="4208000" />
+      <workItem from="1573043251247" duration="977000" />
+      <workItem from="1573044377426" duration="1080000" />
+      <workItem from="1573225699957" duration="1200000" />
+      <workItem from="1573227211523" duration="1258000" />
+      <workItem from="1573572093457" duration="2692000" />
+      <workItem from="1573622631301" duration="3921000" />
+      <workItem from="1573640942392" duration="2021000" />
+      <workItem from="1573643795854" duration="1996000" />
+      <workItem from="1573645905989" duration="3170000" />
+      <workItem from="1573654059446" duration="4633000" />
+      <workItem from="1573715581218" duration="2024000" />
+      <workItem from="1573727708147" duration="183000" />
+      <workItem from="1573728435205" duration="323000" />
+      <workItem from="1573970373658" duration="4479000" />
+      <workItem from="1574176885415" duration="428000" />
+      <workItem from="1574202369983" duration="2635000" />
+      <workItem from="1574217204756" duration="1983000" />
+      <workItem from="1574221891663" duration="3905000" />
+      <workItem from="1574227016878" duration="3175000" />
+      <workItem from="1574232673617" duration="789000" />
+      <workItem from="1574244567572" duration="2655000" />
+      <workItem from="1574249027296" duration="3745000" />
+      <workItem from="1574265219758" duration="10814000" />
+      <workItem from="1574341397362" duration="2586000" />
+      <workItem from="1574357291053" duration="10613000" />
+      <workItem from="1574407158353" duration="658000" />
+      <workItem from="1574415359953" duration="2599000" />
+      <workItem from="1574420087748" duration="284000" />
+      <workItem from="1574501919591" duration="1189000" />
+      <workItem from="1574507297459" duration="2072000" />
+      <workItem from="1574576836054" duration="12123000" />
+      <workItem from="1574681019659" duration="12487000" />
+      <workItem from="1574700646483" duration="6594000" />
+      <workItem from="1574765087382" duration="2240000" />
+      <workItem from="1574785013472" duration="608000" />
+      <workItem from="1574787135937" duration="17312000" />
+      <workItem from="1574849424178" duration="2355000" />
+      <workItem from="1574854919594" duration="2694000" />
+      <workItem from="1574874471070" duration="2304000" />
+      <workItem from="1574917354972" duration="1895000" />
+      <workItem from="1574943566691" duration="7788000" />
+      <workItem from="1574960202498" duration="14662000" />
+      <workItem from="1575008837778" duration="1889000" />
+      <workItem from="1575011675767" duration="6073000" />
+      <workItem from="1575018664767" duration="3390000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>

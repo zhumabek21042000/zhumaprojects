@@ -1,0 +1,18 @@
+{#{% extends 'GameShop/base.html' %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding a game</title>
+</head>
+<body>
+{# {% if request.user.is_admin == True %}#}
+                        <form method="post" action="{% url 'GameShop:game_form' %}" name="game-form">
+                        {% csrf_token %}
+                            {{ form.as_p }}
+                        <button type="submit"></button>
+                        </form>
+                        <!-- *** Single Articles Area *** -->
+{#                    {% endif %}#}
+</body>
+</html>

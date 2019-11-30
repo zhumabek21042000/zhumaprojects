@@ -1,0 +1,19 @@
+{#{% extends 'GameShop/base.html' %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+                        <strong style="align-content: center;color: #1abc9c;caption-side: top;margin-left: 100px;">
+                            <form method="post" action="{% url 'GameShop:news_form' %}" name="news-form">
+                        {% csrf_token %}
+                            {{ form.as_p }}
+                        <button type="submit">Submit</button>
+                        </form>
+                        </strong>
+</div>
+</body>
+</html>
