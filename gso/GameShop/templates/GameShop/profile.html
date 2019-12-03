@@ -11,14 +11,32 @@
         <img src="../../static/GameShop/img/core-img/usericon.png" alt="user" width="100">
         <h4>{{ request.user.username }}</h4>
          <p>Welcome to profile!</p>
+        {% for users in userx %}
+            <div><h2><a href="{% url 'GameShop:ban_user' users.id %}">{% if users.is_active == True %}Ban user {% else %} Unban user{% endif %}</a> | <a href="{% url 'GameShop:delete_user' users.id %}" >Delete user</a></h2></div>
+        <div><h2>Delete users</h2></div>
+{% endfor %}
+{#            {% if userx.is_active %}#}
+{#        <a href="{% url 'GameShop:ban_user' request.user.id %}">{{ userx }}</a>#}
+{#                {% elif not userx.is_active %}#}
+{#                <a href="{% url 'GameShop:ban_user' request.user.id %}">Unban user</a>#}
+{#            {% endif %}#}
+
     </div>
-    <div class="right">
+{#{% if request.user.is_admin %}#}
+{#{% for users in userx %}#}
+{#       {{ users }}#}
+{#        <h1>dqwdwqd</h1>#}
+{#{% endfor %}#}
+{#{% endif %}#}
+    <div clas="right">
         <div class="info">
             
             <div class="social_media">
             <ul>
                 <h3>Information</h3>
-              <li style="margin-left: 550px;"><a href="{% url 'GameShop:profile' %}"><i class="basket"><img src="cart.png" width="35px" height="35px" alt=""></i></a></li>
+                {% if not request.user.is_admin %}
+              <a href="{% url 'GameShop:delete_user' request.user.id %}">Delete profile</a>
+                {% endif %}
           </ul>
       </div>
             <div class="info_data">
@@ -28,7 +46,7 @@
                  </div>
                  <div class="data">
                    <h4>Balance</h4>
-                    <p>{{ request.user.balance }}</p>
+                    <p>{{ request.user.profile.balance }}</p>
               </div>
             </div>
         </div>

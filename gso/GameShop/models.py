@@ -1,5 +1,6 @@
 import django
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.utils import timezone
 from django.conf import settings
@@ -8,6 +9,16 @@ from UserApp.models import *
 
 # Create your models here.
 # from UserApp.models import *
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=250)
+#     slug = models.SlugField(max_length=250, unique=True)
+#     class Meta:
+#         ordering = ('name')
+#         verbose_name = 'category'
+#         verbose_name_plural = 'categories'
+#     def __str__(self):
+#         return self.name
 class Genre(models.Model):
     genre_name = models.CharField(max_length=100)
 
@@ -15,7 +26,13 @@ class Genre(models.Model):
         return self.genre_name
 
 
+def upload_location(instance, filename):
+    # filebase, extension = filename.split(".")
+    return "%s/%s" % (instance.id, filename)
+
+
 class Games(models.Model):
+    # category = models.ForeignKey(Category)
     name = models.CharField(max_length=50)
     creator = models.CharField(max_length=20)
     date_release = models.DateTimeField(default=django.utils.timezone.now)
@@ -25,10 +42,13 @@ class Games(models.Model):
     price = models.FloatField(max_length=30)
     game_rate = models.FloatField()
 
-    image = models.ImageField(upload_to='game_image', blank=True)
+    # image = models.FileField(upload_to=upload_location, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
 
 
 class News(models.Model):
@@ -62,7 +82,8 @@ class OrderItem(models.Model):
     game = models.OneToOneField(Games, on_delete=models.SET_NULL, null=True)
     is_ordered = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now=True)
-    date_ordered = models.DateTimeField(null=True)
+
+    # date_ordered = models.DateTimeField(null=True)
 
     def __str__(self):
         return str(self.game)

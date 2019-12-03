@@ -35,8 +35,8 @@
                 {% if request.user.is_authenticated %}
                     <a class="nav-item nav-link" href="#">{{ request.user.username }}</a>
                     {% else %}
-              <a class="nav-item nav-link" href="#">Login</a>
-              <a class="nav-item nav-link" href="#">Register</a>
+              <a class="nav-item nav-link" href="{% url 'GameShop:login' %}">Login</a>
+              <a class="nav-item nav-link" href="{% url 'GameShop:register' %}">Register</a>
                 {% endif %}
             </div>
           </div>

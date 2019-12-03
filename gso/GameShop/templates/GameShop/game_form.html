@@ -1,4 +1,5 @@
 {#{% extends 'GameShop/base.html' %}#}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,15 @@
 </head>
 <body>
 {# {% if request.user.is_admin == True %}#}
-                        <form method="post" action="{% url 'GameShop:game_form' %}" name="game-form">
+                        <form method="post" action="{% url 'GameShop:game_form' %}" enctype="multipart/form-data" >
                         {% csrf_token %}
-                            {{ form.as_p }}
-                        <button type="submit"></button>
+                            {{ form | crispy }}
+                        <button type="submit">Submit</button>
                         </form>
+                        <div>
+                            <p><a href="{% url 'GameShop:index' %}">Return to home</a></p>
                         <!-- *** Single Articles Area *** -->
 {#                    {% endif %}#}
+</div>
 </body>
 </html>

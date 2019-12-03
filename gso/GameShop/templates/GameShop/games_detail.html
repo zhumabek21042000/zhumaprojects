@@ -13,7 +13,9 @@
       </div>
     </div>
   <div>
-{#      {% if rated == False %}#}
+{#      {% for userz in rated_or_not %}#}
+      {% if not request.user in rated_or_not.rating_user %}
+
       <form method="post" action="{% url 'GameShop:rate_game' games.id%}">
     				{% csrf_token %}
     				-5<input type="radio" name="new_rating" value="-5">
@@ -28,7 +30,9 @@
     				5<input type="radio" name="new_rating" value="5">
     				<input type="submit" value="Value">
     			</form>
-{#      {% endif %}#}
+
+          {% endif %}
+{#      {% endfor%}#}
   </div>
 {#    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}#}
 

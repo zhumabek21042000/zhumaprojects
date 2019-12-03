@@ -25,8 +25,13 @@
                 {{ comment.created_date }}
             </span>
           </p>
-            {% if request.user.is_admin %}
-            <a href="#" style="color:red;">Delete comment</a>
+            {% if request.user.is_admin or comment.user == request.user %}
+            <a href="{% url 'GameShop:delete_comment' comment.id %}" style="color:red;">Delete comment</a>
+{#                <form action="{% url 'GameShop:delete_comment' comment.id %}" style="color: red" method="POST">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" name='comment_id' value="{{ comment.id }}">#}
+{#                        <input type="submit" name="submit" value="DELETE COMMENT">#}
+{#                    </form>#}
             {% endif %}
           {{ comment.text | linebreaks }}
         </div>
@@ -35,18 +40,20 @@
     </div>
     <div class="col-md-8 card mb-4  mt-3 ">
       <div class="card-body">
-        {% if new_comment %}
-        <div class="alert alert-success" role="alert">
-          Your comment is awaiting moderation
-        </div>
-        {% else %}
+      {% if request.user.is_authenticated %}
+{#        {% if new_comment %}#}
+{#        <div class="alert alert-success" role="alert">#}
+{#          Your comment is awaiting moderation#}
+{#        </div>#}
+{#        {% else %}#}
         <h3>Leave a comment</h3>
-        <form method="post" style="margin-top: 1.3em;">
+        <form method="post" style="margin-top: 1.3em;">{% csrf_token %}
           {{ comment_form | crispy }}
-          {% csrf_token %}
+
           <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
         </form>
-        {% endif %}
+{#        {% endif %}#}
+      {% endif %}
       </div>
     </div>
   </div>

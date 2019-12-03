@@ -1,3 +1,4 @@
+{% load bootstrap %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +45,7 @@
                         <div class="search-login-area d-flex align-items-center">
                             <!-- Top Search Area -->
                             <div class="top-search-area">
-                               <form action="{% url 'GameShop:search' %}" method="post">
+                               <form action="{% url 'GameShop:search' %}" method="get">
                                     {% csrf_token %}
                                     <input type="search" name="top-search" id="topSearch" placeholder="Search">
                                     <button type="submit" class="btn"><i class="fa fa-search"></i></button>
@@ -54,10 +55,10 @@
                             <div class="login-area">
                                 {% if request.user.is_authenticated %}
                                     <a href="{% url 'GameShop:profile'%}">{{ request.user.username }}</a>
-                                    <a href="{% url 'logout' %}">Logout</a>
+                                    <a href="{% url 'GameShop:logout' %}">Logout</a>
                                     {% else %}
-                                    <a href="{% url 'register' %}"><span>Register</span> </a>
-                                    <a href="{% url 'login' %}"><span>Login</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                                    <a href="{% url 'GameShop:register' %}"><span>Register</span> </a>
+                                    <a href="{% url 'GameShop:login' %}"><span>Login</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
                             {% endif %}
                             </div>
                         </div>
@@ -93,26 +94,28 @@
                                     <li><a href="{% url 'GameShop:game_list' %}">Games</a>
                                         <ul class="dropdown">
                                             <li><a href="#">Arcade</a></li>
-                                            <li><a href="single-game-review.html">Shooter</a></li>
-                                            <li><a href="single-game-review.html">Action</a></li>
-                                            <li><a href="single-game-review.html">Strategy</a></li>
-                                            <li><a href="single-game-review.html">Desktop game</a></li>
-                                            <li><a href="single-game-review.html">Others</a></li>
+                                            <li><a href="#">Shooter</a></li>
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Strategy</a></li>
+                                            <li><a href="#">Desktop game</a></li>
+                                            <li><a href="#">Others</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="basket.html">Articles</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                        </ul>
-                                    </li>
+{#                                    <li><a href="#">Pages</a>#}
+{#                                        <ul class="dropdown">#}
+{#                                            <li><a href="index.html">Home</a></li>#}
+{#                                            <li><a href="basket.html">Articles</a></li>#}
+{#                                            <li><a href="contact.html">Contact</a></li>#}
+{#                                        </ul>#}
+{#                                    </li>#}
                                     <li><a href="basket.html">Articles</a>
-                                        <ul class="dropdown">
-                                            <li><a href="basket.html">Articles</a></li>
-                                        </ul>
+{#                                        <ul class="dropdown">#}
+{#                                            <li><a href="basket.html">Articles</a></li>#}
+{#                                        </ul>#}
                                     </li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'GameShop:profile' %}">Profile</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <!-- Nav End -->
@@ -147,7 +150,7 @@
                         <div class="col-12 col-lg-9">
                             <div class="blog-content" data-animation="fadeInUp" data-delay="100ms">
                                 <h2 data-animation="fadeInUp" data-delay="400ms">The Power of Gaming</h2>
-                                <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique justo id elit bibendum pharetra non vitae lectus. Mauris libero felis, dapibus a ultrices sed, commodo vitae odio. Sed auctor tellus quis arcu tempus, egestas tincidunt.</p>
+                                <p data-animation="fadeInUp" data-delay="700ms">Welcome to our Game Store! We are ready to see you there, please, enjoy your time, Hordian!</p>
                             </div>
                         </div>
                     </div>
@@ -162,7 +165,7 @@
                         <div class="col-12 col-lg-9">
                             <div class="blog-content" data-animation="fadeInUp" data-delay="100ms">
                                 <h2 data-animation="fadeInUp" data-delay="400ms">The Power of Gaming</h2>
-                                <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique justo id elit bibendum pharetra non vitae lectus. Mauris libero felis, dapibus a ultrices sed, commodo vitae odio. Sed auctor tellus quis arcu tempus, egestas tincidunt.</p>
+                                <p data-animation="fadeInUp" data-delay="700ms">Already tired of old games? Only in our shop can you buy the newest games!</p>
                             </div>
                         </div>
                     </div>
@@ -213,7 +216,7 @@
                             <a class="nav-link" id="latest-tab" data-toggle="tab" href="#latest" role="tab" aria-controls="latest" aria-selected="false">Latest</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="editor-tab" data-toggle="tab" href="#editor" role="tab" aria-controls="editor" aria-selected="false">Editor’s Pick</a>
+{#                            <a class="nav-link" id="editor-tab" data-toggle="tab" href="#editor" role="tab" aria-controls="editor" aria-selected="false">Editor’s Pick</a>#}
                         </li>
                     </ul>
                 </div>
@@ -224,7 +227,19 @@
             <div class="tab-pane fade show active" id="popular" role="tabpanel" aria-labelledby="popular-tab">
                 <!-- Popular Games Slideshow -->
                 <div class="popular-games-slideshow owl-carousel">
-
+                    {% for game in ordered_games %}
+                        <div class="single-games-slide">
+{#                        <a href="{% url 'GameShop:games_detail' game.id %}"><img src="{{ game.image.url}}" width="150" height="150" alt=""></a>#}
+                        <div class="slide-text">
+                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a> | <a style="color: yellow;" href="{% url 'GameShop:edit_game' game.id %}">Edit game</a> | <a style="color: coral" href="{% url 'GameShop:delete_game' game.id %}">Delete game</a>
+                            <div class="meta-data">
+                                <a href="{% url 'GameShop:games_detail' game.id %}">Genre(s): <br/>{% for genre in game.genres.all %} {{ genre }}<br/>{% endfor %} </a>
+                                <a href="{% url 'GameShop:games_detail' game.id %}" style="color: sandybrown">Rate: {{ game.game_rate }}</a>
+                                <a href="{% url 'GameShop:games_detail' game.id %}"><br/>Price: {{ game.price }} Тенге</a>
+                            </div>
+                        </div>
+                </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="tab-pane fade" id="latest" role="tabpanel" aria-labelledby="latest-tab">
@@ -232,21 +247,17 @@
                 <div class="latest-games-slideshow owl-carousel">
                 {% for game in games %}
                     <div class="single-games-slide">
-{#                    <form action="{% url 'GameShop:addtocart' method="post"%}>#}
-{#         #}
-{#                                    {% csrf_token %}>#}
-{#                    <a href="#" style="color: #1c7430">Add to Cart</a>#}
-                        <a href="{% url 'GameShop:games_detail' game.id %}"><img src="{{ game.image.url}}" width="150" height="150" alt=""></a>
+{#                        <a href="{% url 'GameShop:games_detail' game.id %}"><img src="{{ game.image.url}}" width="150" height="150" alt=""></a>#}
                         <div class="slide-text">
-                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a>
+                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a> | <a style="color: yellow;" href="{% url 'GameShop:edit_game' game.id %}">Edit game</a> | <a style="color: coral" href="{% url 'GameShop:delete_game' game.id %}">Delete game</a>
                             <div class="meta-data">
                                 <a href="{% url 'GameShop:games_detail' game.id %}">Genre(s): <br/>{% for genre in game.genres.all %} {{ genre }}<br/>{% endfor %} </a>
                                 <a href="{% url 'GameShop:games_detail' game.id %}" style="color: sandybrown">Rate: {{ game.game_rate }}</a>
                                 <a href="{% url 'GameShop:games_detail' game.id %}"><br/>Price: {{ game.price }} Тенге</a>
                             </div>
                         </div>
-                {% endfor %}
                 </div>
+                {% endfor %}
             </div>
             <div class="tab-pane fade" id="editor" role="tabpanel" aria-labelledby="editor-tab">
                 <div class="editor-games-slideshow owl-carousel">
@@ -470,7 +481,7 @@
                             <div class="article-content">
                                 <a href="{% url 'GameShop:news_detail' new.id %}" class="post-title">{{ new.title }}</a>
                                 {% if request.user.is_admin == True %}
-                                <a href="{% url 'GameShop:news_form' %}" style="color: #007bff">Edit news</a> | <a href="#" style="color: #007bff">Delete news</a>
+                                    <a href="{% url 'GameShop:delete_news' new.id %}" style="color: #007bff">Delete news</a>
                                 {% endif %}
                                 <div class="post-meta">
                                     <a href="#" class="post-date">{{ new.date }}</a>
@@ -512,7 +523,7 @@
                                 <a href="index.html">Index</a>
                             </div>
                             <div class="widget-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris velit arcu, scelerisque dignissim massa quis, mattis facilisis erat. Aliquam erat volutpat. Sed efficitur diam ut interdum ultricies.</p>
+                                <p>This website has been developed by Django Framework. The project creators are ZhumazZzGubash, Era and Maga. Thanks all of them, who supported the project. Wish you the best</p>
                             </div>
                         </div>
                     </div>
@@ -593,10 +604,10 @@
                         <!-- Footer Nav -->
                         <div class="footer-nav">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="game-review.html">Games</a></li>
-                                <li><a href="basket.html">Articles</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="{% url 'GameShop:game_list' %}">Games</a></li>
+{#                                <li><a href="basket.html">Articles</a></li>#}
+{#                                <li><a href="contact.html">Contact</a></li>#}
                             </ul>
                         </div>
                     </div>

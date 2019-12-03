@@ -1,5 +1,17 @@
-<ul>
+<head style="background: #1e7e34"> <h1>Search</h1></head>
+<body style="background: #34ce57">
+<ul style="background: khaki">
+<h2>Games</h2>
 {% for element in results %}
-    <li><a href="{% url 'GameShop:news_detail' %}" {{ element.name }}</li>
+    {% if element.name %}
+    <li><a href="{% url 'GameShop:games_detail' element.id %}" >Game name: {{ element.name}} |Game genre(s): {% for genre in element.genres.all %}{{ genre }} {% endfor %}</a></li>
+    {% endif %}
+{% endfor %}
+    <h2>News</h2>
+{% for element in results %}
+    {% if element.title %}
+    <li><a href="{% url 'GameShop:news_detail' element.id %}">{{ element.title }}</a></li>
+    {% endif %}
 {% endfor %}
 </ul>
+</body>

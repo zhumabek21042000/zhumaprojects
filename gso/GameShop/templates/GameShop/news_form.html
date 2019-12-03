@@ -1,4 +1,5 @@
 {#{% extends 'GameShop/base.html' %}#}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
                         <strong style="align-content: center;color: #1abc9c;caption-side: top;margin-left: 100px;">
                             <form method="post" action="{% url 'GameShop:news_form' %}" name="news-form">
                         {% csrf_token %}
-                            {{ form.as_p }}
+                            {{ form |crispy}}
                         <button type="submit">Submit</button>
                         </form>
                         </strong>

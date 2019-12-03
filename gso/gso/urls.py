@@ -18,13 +18,14 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from UserApp.views import *
+# from UserApp.views import *
 
 urlpatterns = [
     path('', include('GameShop.urls')),
     path('admin/', admin.site.urls),
-    # path(r'^search/', include('search.urls', namespace='search')),
-    path('register/', registration_view, name='register'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
+    # path('register/', registration_view, name='register'),
+    # path('login/', login_view, name='login'),
+    # path('logout/', logout_view, name='logout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
