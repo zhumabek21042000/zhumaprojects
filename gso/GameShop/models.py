@@ -9,16 +9,36 @@ from UserApp.models import *
 
 # Create your models here.
 # from UserApp.models import *
-
+#
 # class Category(models.Model):
 #     name = models.CharField(max_length=250)
 #     slug = models.SlugField(max_length=250, unique=True)
 #     class Meta:
-#         ordering = ('name')
+#         ordering = ('name', )
 #         verbose_name = 'category'
 #         verbose_name_plural = 'categories'
 #     def __str__(self):
 #         return self.name
+
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=200)
+#     slug = models.SlugField()
+#     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
+#
+#     class Meta:
+#         unique_together = ('slug', 'parent',)
+#         verbose_name_plural = "categories"
+#
+#     def __str__(self):
+#         full_path = [self.name]
+#         k = self.parent
+#         while k is not None:
+#             full_path.append(k.name)
+#             k = k.parent
+#         return ' -> '.join(full_path[::-1])
+
+
 class Genre(models.Model):
     genre_name = models.CharField(max_length=100)
 
@@ -32,7 +52,7 @@ def upload_location(instance, filename):
 
 
 class Games(models.Model):
-    # category = models.ForeignKey(Category)
+    # category = models.ManyToManyField(Category, null=True, blank=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=50)
     creator = models.CharField(max_length=20)
     date_release = models.DateTimeField(default=django.utils.timezone.now)
@@ -41,24 +61,42 @@ class Games(models.Model):
     mode = models.CharField(max_length=10)
     price = models.FloatField(max_length=30)
     game_rate = models.FloatField()
-
-    # image = models.FileField(upload_to=upload_location, null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True)
+    image = models.FileField(upload_to=upload_location, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
+    # def get_cat_list(self):
+    #     k = self.category  # for now ignore this instance method
+    #
+    #     breadcrumb = ["dummy"]
+    #     while k is not None:
+    #         breadcrumb.append(k.slug)
+    #         k = k.parent
+    #     for i in range(len(breadcrumb) - 1):
+    #         breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
+    #     return breadcrumb[-1:0:-1]
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    game = models.ManyToManyField(Games, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class News(models.Model):
     title = models.CharField(max_length=30)
     date = models.DateTimeField(default=django.utils.timezone.now)
     description = models.TextField(max_length=1000)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    author = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
 
     # comments = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='news_image', blank=True)
+    image = models.ImageField(upload_to='news_image', null=True, blank=True)
 
     def __str__(self):
         return self.title

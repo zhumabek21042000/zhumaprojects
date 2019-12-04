@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for userx in users %}
+
+   {% if userx.is_active == True %}<a href="{% url 'GameShop:ban_user' userx.id %}">Ban user | {{ userx.username }} </a>{% else %}
+       <a href="{% url 'GameShop:unban_user' userx.id %}">Unban user | {{ userx.username }}</a>
+   {% endif %} |  <a href="{% url 'GameShop:delete_user' userx.id %}">Delete user</a>
+{% endfor %}
+<h1><a href="{% url 'GameShop:index' %}">HOME</a> </h1>
+</body>
+</html>

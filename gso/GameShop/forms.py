@@ -19,11 +19,11 @@ class CommentForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ['title', 'description', 'user', 'date', 'image']
-        # exclude = ['user']
+        fields = ['title', 'description', 'author', 'date', 'image']
+        # exclude = ['author']
 
 
 class GameForm(forms.ModelForm):
     class Meta:
         model = Games
-        fields = ['name', 'creator', 'date_release', 'genres', 'mode', 'game_rate', 'price']
+        fields = '__all__'

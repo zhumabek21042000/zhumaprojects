@@ -1,0 +1,474 @@
+{##}
+{#{% load static  %}#}
+{#{% block content %}#}
+{#<br>#}
+{#{% if sub_categories %}#}
+{#    <h3>Sub Categories</h3>#}
+{#    {% for i in sub_categories %}#}
+{#        <a href="{{ i.slug }}"> {{ i.name }} </a>#}
+{#    {% endfor %}#}
+{#{% endif %}#}
+{##}
+{#<div class="row small-up-1 medium-up-3" >#}
+{#{% if post_set %}#}
+{#{% for i in game_set %}#}
+{#    <div class="columns">#}
+{#        <div class=" card-article-hover card">#}
+{#          <a href="{{ i.slug }}">#}
+{#            <img  src="{{ i.cover_photo.url }}" alt="">#}
+{#          </a>#}
+{#          <div class="card-section">#}
+{#            <a href="{{ i.slug }}">#}
+{#              <h6 class="article-title">{{ i.title | truncatechars:30}}</h6>#}
+{#            </a>#}
+{#          </div>#}
+{#          <div class="card-divider flex-container align-middle">#}
+{#            <a href="" class="author">{{ i.user.get_full_name }}</a>#}
+{#          </div>#}
+{#          <div class="hover-border">#}
+{#          </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endfor %}#}
+{#{% endif %}#}
+{#</div>#}
+{#{% endblock %}#}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>GameShop</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../static/GameShop/img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../static/GameShop/style.css">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Top Header Area -->
+        <div class="top-header-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 d-flex align-items-center justify-content-between">
+                        <!-- Logo Area -->
+                        <div class="logo">
+                            <a href="{% url 'GameShop:index' %}">Game Shop</a>
+                        </div>
+
+                        <!-- Search & Login Area -->
+                        <div class="search-login-area d-flex align-items-center">
+                            <!-- Top Search Area -->
+                            <div class="top-search-area">
+                                <form action="#" method="post">
+                                    <input type="search" name="top-search" id="topSearch" placeholder="Search">
+                                    <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                            <!-- Login Area -->
+                            <div class="login-area">
+                                {% if request.user.is_authenticated %}
+                                    <a href="{% url 'GameShop:profile'%}">{{ request.user.username }}</a>
+                                    <a href="{% url 'GameShop:logout' %}">Logout</a>
+                                    {% else %}
+                                    <a href="{% url 'GameShop:register' %}"><span>Register</span> </a>
+                                    <a href="{% url 'GameShop:login' %}"><span>Login</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar Area -->
+        <div class="egames-main-menu" id="sticker">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="egamesNav">
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="{% url 'GameShop:index' %}">Home</a></li>
+                                    <li><a href="{% url 'GameShop:game_list' %}">Games</a>
+                                        <ul class="dropdown">
+                                            <li><a href="{% url 'GameShop:category_arcade' %}">Arcade</a></li>
+                                            <li><a href="{% url 'GameShop:category_office' %}">Office games</a></li>
+                                            <li><a href="{% url 'GameShop:category_action' %}">Action</a></li>
+                                            <li><a href="{% url 'GameShop:category_strategy' %}">Strategy</a></li>
+                                        </ul>
+                                    </li>
+{#                                    <li><a href="basket.html">Articles</a>?#}
+                                    </li>
+                                    {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'GameShop:profile' %}">Profile</a></li>
+                                    {% endif %}
+                                </ul>
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+
+                        <!-- Top Social Info -->
+                        <div class="top-social-info">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Behance"><i class="fa fa-behance" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/27.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <!-- Breadcrumb Text -->
+                <div class="col-12">
+                    <div class="breadcrumb-text">
+                        <h2>Review</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Game Review Area Start ##### -->
+    <section class="game-review-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% for object in category_arc %}
+                        {% for game in object.game.all %}
+
+                    <!-- *** Single Review Area *** -->
+                    <p><h1>Arcade</h1></p>
+                            {% if "Arcade" in object.game %}
+                    <div class="single-game-review-area d-flex flex-wrap mb-30">
+                        <div class="game-thumbnail">
+                            <img src="{{ game.image }}" alt="">
+                        </div>
+                        <div class="game-content">
+                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a>
+                             {% if game in request.user.profile.items.all %}
+            <!-- add a button here to see the product -->
+                <h3>You own this</h3>
+            {% elif object in current_order_products %}
+            <a href="{% url 'GameShop:profile' %}" class="btn btn-warning">Go to Cart</a>
+            {% else %}
+            <a href="{% url 'GameShop:add_to_cart' game.id %}" class="btn btn-warning">Add to Cart</a>
+            {% endif %}
+                            <div class="game-meta">
+                                <a href="{% url 'GameShop:games_detail' game.id %}" class="game-date">{{game.date_release}}</a>
+                            </div>
+                            <p>{{ game.description }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area d-flex align-items-center justify-content-between">
+                                <div class="rating-area text-center">
+                                    <h3>{{ game.game_rate }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <p><h1>Office games</h1></p>
+                            {% elif "Office games" in object.name %}
+                    <div class="single-game-review-area d-flex flex-wrap mb-30">
+                        <div class="game-thumbnail">
+                            <img src="{{ game.image.url }}" alt="">
+                        </div>
+                        <div class="game-content">
+                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a>
+                             {% if game in request.user.profile.items.all %}
+            <!-- add a button here to see the product -->
+                <h3>You own this</h3>
+            {% elif object in current_order_products %}
+            <a href="{% url 'GameShop:profile' %}" class="btn btn-warning">Go to Cart</a>
+            {% else %}
+            <a href="{% url 'GameShop:add_to_cart' game.id %}" class="btn btn-warning">Add to Cart</a>
+            {% endif %}
+                            <div class="game-meta">
+                                <a href="{% url 'GameShop:games_detail' game.id %}" class="game-date">{{game.date_release}}</a>
+                            </div>
+                            <p>{{ game.description }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area d-flex align-items-center justify-content-between">
+                                <div class="rating-area text-center">
+                                    <h3>{{ game.game_rate }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <p><h1>Action</h1></p>
+                            {% elif "Action" in object.name %}
+                    <div class="single-game-review-area d-flex flex-wrap mb-30">
+                        <div class="game-thumbnail">
+                            <img src="{{ game.image.url }}" alt="">
+                        </div>
+                        <div class="game-content">
+                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a>
+                             {% if game in request.user.profile.items.all %}
+            <!-- add a button here to see the product -->
+                <h3>You own this</h3>
+            {% elif object in current_order_products %}
+            <a href="{% url 'GameShop:profile' %}" class="btn btn-warning">Go to Cart</a>
+            {% else %}
+            <a href="{% url 'GameShop:add_to_cart' game.id %}" class="btn btn-warning">Add to Cart</a>
+            {% endif %}
+                            <div class="game-meta">
+                                <a href="{% url 'GameShop:games_detail' game.id %}" class="game-date">{{game.date_release}}</a>
+                            </div>
+                            <p>{{ game.description }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area d-flex align-items-center justify-content-between">
+                                <div class="rating-area text-center">
+                                    <h3>{{ game.game_rate }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <p><h1>Strategy</h1></p>
+                                {% elif "Strategy" in object.name %}
+                    <div class="single-game-review-area d-flex flex-wrap mb-30">
+                        <div class="game-thumbnail">
+                            <img src="{{ game.image.url }}" alt="">
+                        </div>
+                        <div class="game-content">
+                            <a href="{% url 'GameShop:games_detail' game.id %}" class="game-title">{{ game.name }}</a>
+                             {% if game in request.user.profile.items.all %}
+            <!-- add a button here to see the product -->
+                <h3>You own this</h3>
+            {% elif object in current_order_products %}
+            <a href="{% url 'GameShop:profile' %}" class="btn btn-warning">Go to Cart</a>
+            {% else %}
+            <a href="{% url 'GameShop:add_to_cart' game.id %}" class="btn btn-warning">Add to Cart</a>
+            {% endif %}
+                            <div class="game-meta">
+                                <a href="{% url 'GameShop:games_detail' game.id %}" class="game-date">{{game.date_release}}</a>
+                            </div>
+                            <p>{{ game.description }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area d-flex align-items-center justify-content-between">
+                                <div class="rating-area text-center">
+                                    <h3>{{ game.game_rate }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            {% endif %}
+                {% endfor %}
+                    {% endfor %}
+
+                    <!-- *** Single Review Area *** -->
+
+                    <!-- ### Pagination Area ### -->
+{#                    <nav aria-label="Page navigation example">#}
+{#                        <ul class="pagination mt-100">#}
+{#                            <li class="page-item active"><a class="page-link" href="#">01</a></li>#}
+{#                            <li class="page-item"><a class="page-link" href="#">02</a></li>#}
+{#                            <li class="page-item"><a class="page-link" href="#">03</a></li>#}
+{#                        </ul>#}
+{#                    </nav>#}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Game Review Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <!-- Main Footer Area -->
+        <div class="main-footer-area section-padding-100-0">
+            <div class="container">
+                <div class="row">
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget mb-70">
+                            <div class="widget-title">
+{#                                <a href="index.html"><img src="../../static/GameShop/img/core-img/logo2.png" alt=""></a>#}
+                            </div>
+                            <div class="widget-content">
+                                <p>Thanks for your support,  we love you</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget mb-70">
+                            <div class="widget-title">
+                                <h4>Game Reviews</h4>
+                            </div>
+                            <div class="widget-content">
+                                <nav>
+                                    <ul>
+                                        <li><a href="#">Doom</a></li>
+                                        <li><a href="#">Grand Theft Auto</a></li>
+                                        <li><a href="#">Bloodborne</a></li>
+                                        <li><a href="#">God of war</a></li>
+                                        <li><a href="#">Persona 5</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget mb-70">
+                            <div class="widget-title">
+                                <h4>Usefull Links</h4>
+                            </div>
+                            <div class="widget-content">
+                                <nav>
+                                    <ul>
+{#                                        <li><a href="#">Testimanials</a></li>#}
+                                        <li><a href="#">Reviews</a></li>
+                                        <li><a href="#">New Games</a></li>
+{#                                        <li><a href="#">Forum</a></li>#}
+                                        <li><a href="#">Contact</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget mb-70">
+                            <div class="widget-title">
+                                <h4>What’s new</h4>
+                            </div>
+                            <div class="widget-content">
+                                <nav>
+                                    <ul>
+                                        <li><a href="#">Doom</a></li>
+                                        <li><a href="#">Grand Theft Auto</a></li>
+                                        <li><a href="#">Bloodborne</a></li>
+                                        <li><a href="#">God of war</a></li>
+                                        <li><a href="#">Persona 5</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copywrite Area -->
+        <div class="copywrite-content">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-sm-5">
+                        <!-- Copywrite Text -->
+                        <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+                    </div>
+                    <div class="col-12 col-sm-7">
+                        <!-- Footer Nav -->
+                        <div class="footer-nav">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="game-review.html">Games</a></li>
+                                <li><a href="post.html">Articles</a></li>
+                                <li><a href="single-game-review.html">Reviews</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="../../static/GameShop/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="../../static/GameShop/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="../../static/GameShop/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="../../static/GameShop/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="../../static/GameShop/js/active.js"></script>
+</body>
+
+</html>

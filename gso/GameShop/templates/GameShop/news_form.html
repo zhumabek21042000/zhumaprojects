@@ -9,7 +9,7 @@
 <body>
 <div>
                         <strong style="align-content: center;color: #1abc9c;caption-side: top;margin-left: 100px;">
-                            <form method="post" action="{% url 'GameShop:news_form' %}" name="news-form">
+                            <form method="post" action="{% url 'GameShop:news_form' %}">
                         {% csrf_token %}
                             {{ form |crispy}}
                         <button type="submit">Submit</button>

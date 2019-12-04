@@ -11,15 +11,10 @@
         <img src="../../static/GameShop/img/core-img/usericon.png" alt="user" width="100">
         <h4>{{ request.user.username }}</h4>
          <p>Welcome to profile!</p>
-        {% for users in userx %}
-            <div><h2><a href="{% url 'GameShop:ban_user' users.id %}">{% if users.is_active == True %}Ban user {% else %} Unban user{% endif %}</a> | <a href="{% url 'GameShop:delete_user' users.id %}" >Delete user</a></h2></div>
-        <div><h2>Delete users</h2></div>
-{% endfor %}
-{#            {% if userx.is_active %}#}
-{#        <a href="{% url 'GameShop:ban_user' request.user.id %}">{{ userx }}</a>#}
-{#                {% elif not userx.is_active %}#}
-{#                <a href="{% url 'GameShop:ban_user' request.user.id %}">Unban user</a>#}
-{#            {% endif %}#}
+
+            {% if request.user.is_admin %}
+                <a href="{% url 'GameShop:users' %}">Admin panel</a>
+            {% endif %}
 
     </div>
 {#{% if request.user.is_admin %}#}
@@ -56,8 +51,12 @@
             <h3>Games</h3>
             <div class="projects_data">
                  <div class="data">
-                    <h4>Recent</h4>
-                    <p>GTA 5</p>
+                    <h4>Recent bought</h4>
+{#{% for game in user_games.all %}#}
+{#    {% for item in game %}#}
+{#        {{ item }}#}
+{#        {% endfor %}#}
+{#                     {% endfor %}#}
                  </div>
                  <div class="data">
                    <h4>Most Played</h4>
@@ -79,7 +78,8 @@
           <td>{{ order.ref_code }}</td>
           <td>
         	{% for itemm in order.items.all %}
-        		<a href="{% url 'GameShop:game_list' %}">{{ itemm.game }}</a>
+        		<a href="{% url 'GameShop:games_detail' itemm.game.id %}">{{ itemm.game }}</a>
+{#                <a href="{% url 'GameShop:buygame' itemm.game.id %}">Buy game</a>#}
 
       	  </td>
           <td>   {{ itemm.game.price }} Тенге <a href="{% url 'GameShop:delete_item' itemm.id %}">Delete game</a></td>

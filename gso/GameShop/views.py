@@ -44,26 +44,32 @@ def delete_user(request, user_id):
 
 
 def ban_user(request, user_id):
-    userx = Account.objects.all()
-    if userx.filter(is_active=True):
-        try:
-            user = get_object_or_404(Account, pk=user_id)
-            user.is_active = False
-            user.save()
-            HttpResponse('Account has been banned')
-            return redirect('GameShop:ban_user')
-        except:
-            pass
-    elif userx.filter(is_active=False):
-        try:
-            user = get_object_or_404(Account, pk=user_id)
-            user.is_active = True
-            user.save()
-            HttpResponse('Account has been unbanned')
-            return redirect('GameShop:ban_user')
-        except:
-            pass
-    return render(request, 'GameShop/profile.html', {'userx': userx})
+    try:
+        user = get_object_or_404(Account, pk=user_id)
+        user.is_active = False
+        user.save()
+        HttpResponse('Account has been banned')
+        # return redirect('GameShop:ban_user')
+    except:
+        pass
+    return redirect('GameShop:users')
+
+
+def unban_user(request, user_id):
+    try:
+        user = get_object_or_404(Account, pk=user_id)
+        user.is_active = True
+        user.save()
+        HttpResponse('Account has been banned')
+        # return redirect('GameShop:ban_user')
+    except:
+        pass
+    return redirect('GameShop:users')
+
+
+def users(request):
+    users = Account.objects.filter(is_admin=False)
+    return render(request, 'GameShop/AdminPanel.html', {'users': users})
 
 
 def search(request):
@@ -80,20 +86,21 @@ def search(request):
     return HttpResponseRedirect('index')
 
 
+def balance(request, user_id):
+    user_acc = get_object_or_404(Profile, pk=user_id)
+
+
 def delete_comment(request, news_id):
-    newss = get_object_or_404(News, pk=news_id)
-    comment = Comment.objects.filter(news_comment=newss)
-    try:
-        # comment_id = request.POST['comment_id']
-        # comment.get(pk=comment_id).delete()
-        comment.delete()
-        # Comment.objects.get(pk=comment_id).delete()
-    except:
-        return HttpResponseRedirect(reverse('GameShop:news_detail'), args=(news_id,))
-    return HttpResponseRedirect(reverse('GameShop:news_detail'), args=(news_id,))
+    # newss = get_object_or_404(News, pk=news_id)
+    comment = Comment.objects.filter()
+    if comment.exists():
+        comment[0].delete()
+    return redirect('GameShop:index')
+
 
 def news(request, pk):
     newss = get_object_or_404(News, pk=pk)
+    all_news = News.objects.order_by('-date').all()
     comments = newss.comments.filter()
     new_comment = None
     if request.method == 'POST':
@@ -108,14 +115,14 @@ def news(request, pk):
         comment_form = CommentForm
     context = {'news': newss, 'comments': comments,
                'new_comment': new_comment,
-               'comment_form': comment_form}
-    return render(request, "GameShop/news_detail.html", context)
+               'comment_form': comment_form, 'all_news': all_news}
+    return render(request, "GameShop/single-post.html", context)
 
 
 def games(request, pk):
     games = get_object_or_404(Games, pk=pk)
     context = {'games': games}
-    return render(request, "GameShop/games_detail.html", context)
+    return render(request, "GameShop/single-game-review.html", context)
 
 
 def rate_game(request, game_id):
@@ -168,13 +175,12 @@ def delete_from_cart(request, item_id):
 
 
 def new_news(request):
-    # if request.method == 'POST':
-    form = NewsForm(request.POST or None)
-    # new_form = None
-    if form.is_valid():
-        form.user = Account.objects.get(username=request.user.username)
-        form.save()
-        return redirect('GameShop:index')
+    form = NewsForm(request.POST or None, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.author = request.user
+            form.save()
+            return redirect('GameShop:index')
     else:
         form = NewsForm()
     return render(request, 'GameShop/news_form.html', {'form': form})
@@ -190,6 +196,12 @@ def new_games(request):
     else:
         form = GameForm()
     return render(request, 'GameShop/game_form.html', {'form': form})
+
+
+def delete_game(request, game_id):
+    game = get_object_or_404(Games, pk=game_id)
+    game.delete()
+    return HttpResponseRedirect(reverse('GameShop:index'))
 
 
 def edit_game(request, pk):
@@ -212,18 +224,34 @@ def edit_game(request, pk):
 def profile(request):
     my_user_profile = Profile.objects.filter(user=request.user).first()
     my_orders = Order.objects.filter(is_ordered=True, owner=my_user_profile)
+    user_games = Profile.objects.filter(user=request.user)
     context = {
-        'my_orders': my_orders
+        'my_orders': my_orders,
+        'user_games': user_games
     }
+
     return render(request, "GameShop/profile.html", context)
+
+
+def buy_game(request, game_id):
+    # orders = Order.items.get
+    user_profile = get_object_or_404(Profile, user=request.user)
+    item = Order.items.filter(order__owner=user_profile).all()
+    # item = Order.items.filter(id=kwargs.get('item_id', "")).first()
+    if item in request.user.profile.items.all():
+        messages.info(request, 'You already own this game')
+        return redirect(reverse('GameShop:games_list'))
+    else:
+        game = Profile.objects.get_or_create(items=item)
+        messages.info(request, 'Game has been purchased')
+    return redirect(reverse('GameShop:profile'), args=(request.user.id,))
 
 
 def game_list(request):
     object_list = Games.objects.all()
     egame = Games.objects.filter().order_by('-game_rate')
     if ord:
-        s = []
-        s.append(ord)
+        s = [ord]
     # profile = Profile.objects.get_or_create(user=request.user)
     filtered_orders = Order.objects.filter(owner=request.user.profile, is_ordered=True)
     current_order_products = []
@@ -237,7 +265,15 @@ def game_list(request):
         'egame': egame,
     }
 
-    return render(request, "GameShop/games_list.html", context)
+    return render(request, "GameShop/game-review.html", context)
+
+
+def news_list(request):
+    object_list = News.objects.all()
+    context = {
+        'object_list': object_list,
+    }
+    return render(request, "GameShop/post.html", context)
 
 
 def delete_news(request, news_id):
@@ -246,35 +282,57 @@ def delete_news(request, news_id):
     return HttpResponseRedirect(reverse('GameShop:index'))
 
 
-def delete_game(request, game_id):
-    game = get_object_or_404(Games, pk=game_id)
-    game.delete()
-    return HttpResponseRedirect(reverse('GameShop:index'))
-
-
 def recommendations(request):
     # s = Order.items.filter(order__owner=request.user.username, game__genres=).all()
-    g = Profile.items.filter(orderitem__order__owner=request.user)
-    genre_list = []
-    if g.exists():
-        gg = g[0]
-        genre = gg.genres.all()
-        genre_list = []
-        genre_list = [genr.genre_name for genr in genre]
-    else:
-        genre_list.append("Ssss")
+    # g = Profile.items.filter(orderitem__order__owner=request.user)
+    # genre_list = g.values('genres__games__name')
+    g = Profile.items.filter(orderitem__order__owner=request.user).values('genres__genre_name')
+    genre_list = Order.items.filter(order__owner=request.user).values('game__genres__genre_name')
+    # if g.exists():
+    #     gg = g[0]
+    #     genre = gg.genres.all()
+    #     for genrx in genre:
+    #         genre_list.append(genrx)
+    # else:
+    #     genre_list.append("Ssss")
     print(genre_list)
-    return render(request, 'GameShop/games_list.html', {'genre_list': genre_list})
+    genre_list += 'S'
+    return render(request, 'GameShop/post.html', {'genre_list': genre_list})
     # pass
-# def category(request):
-#     filtered_orders = Order.objects.filter(owner=request.user.profile, is_ordered=True)
-#     current_order_products = []
-#     if filtered_orders.exists():
-#         user_order = filtered_orders[0]
-#         user_order_items = user_order.items.all()
-#         current_order_products = [game.game for game in user_order_items]
-#     context = {
-#         'object_list': object_list,
-#         'current_order_products': current_order_products,
-#         'egame': egame,
-#     }
+
+
+def category_office(request):
+    categor_o = Category.objects.all()
+    return render(request, 'GameShop/categories.html', {'category_o': categor_o})
+
+
+def category_strategy(request):
+    category_s = Category.objects.all()
+    return render(request, 'GameShop/categories.html', {'category_s': category_s})
+
+
+def category_arcade(request):
+    category_arc = Category.objects.all()
+    return render(request, 'GameShop/categories.html', {'category_arc': category_arc})
+
+
+def category_action(request):
+    category_act = Category.objects.all()
+    return render(request, 'GameShop/categories.html', {'category_act': category_act})
+# def category(request, hierarchy=None):
+#     category_slug = hierarchy.split('/')
+#     category_queryset = list(Category.objects.all())
+#     all_slugs = [x.slug for x in category_queryset]
+#     parent = None
+#     for slug in category_slug:
+#         if slug in all_slugs:
+#             parent = get_object_or_404(Category, slug=slug, parent=parent)
+#         else:
+#             instance = get_object_or_404(Games, slug=slug)
+#             breadcrumbs_link = instance.get_cat_list()
+#             category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
+#             breadcrumbs = zip(breadcrumbs_link, category_name)
+#             return render(request, "GameShop/index.html", {'instance': instance, 'breadcrumbs': breadcrumbs})
+#
+#     return render(request, "GameShop/categories.html",
+#                   {'game_set': parent.c, 'sub_categories': parent.children.all()})

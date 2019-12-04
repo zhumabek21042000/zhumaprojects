@@ -93,25 +93,13 @@
                                     <li><a href="{% url 'GameShop:index' %}">Home</a></li>
                                     <li><a href="{% url 'GameShop:game_list' %}">Games</a>
                                         <ul class="dropdown">
-                                            <li><a href="#">Arcade</a></li>
-                                            <li><a href="#">Shooter</a></li>
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Strategy</a></li>
-                                            <li><a href="#">Desktop game</a></li>
-                                            <li><a href="#">Others</a></li>
+                                            <li><a href="{% url 'GameShop:category_arcade' %}">Arcade</a></li>
+                                            <li><a href="{% url 'GameShop:category_office' %}">Office games</a></li>
+                                            <li><a href="{% url 'GameShop:category_action' %}">Action</a></li>
+                                            <li><a href="{% url 'GameShop:category_strategy' %}">Strategy</a></li>
                                         </ul>
                                     </li>
-{#                                    <li><a href="#">Pages</a>#}
-{#                                        <ul class="dropdown">#}
-{#                                            <li><a href="index.html">Home</a></li>#}
-{#                                            <li><a href="basket.html">Articles</a></li>#}
-{#                                            <li><a href="contact.html">Contact</a></li>#}
-{#                                        </ul>#}
-{#                                    </li>#}
-                                    <li><a href="basket.html">Articles</a>
-{#                                        <ul class="dropdown">#}
-{#                                            <li><a href="basket.html">Articles</a></li>#}
-{#                                        </ul>#}
+                                    <li><a href="{% url 'GameShop:news_list' %}">Articles</a>
                                     </li>
                                     {% if request.user.is_authenticated %}
                                     <li><a href="{% url 'GameShop:profile' %}">Profile</a></li>
@@ -272,117 +260,22 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="egames-nav-btn">
                         <div class="nav flex-column" id="video-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active" id="video1" data-toggle="pill" href="#video-1" role="tab" aria-controls="video-1" aria-selected="true">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="100ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/14.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Assemble Your Squad and Join the Battle</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
-
-                            <a class="nav-link" id="video2" data-toggle="pill" href="#video-2" role="tab" aria-controls="video-2" aria-selected="false">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="200ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/15.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Tips to improve your game</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
-
-                            <a class="nav-link" id="video3" data-toggle="pill" href="#video-3" role="tab" aria-controls="video-3" aria-selected="false">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="300ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/16.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Game reviews: the best of 2018</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
-
-                            <a class="nav-link" id="video4" data-toggle="pill" href="#video-4" role="tab" aria-controls="video-4" aria-selected="false">
+                            {% for new in news %}
+                            <a class="nav-link" id="video4" data-toggle="pill" href="{% url 'GameShop:news_detail' new.id %}" role="tab" aria-controls="video-4" aria-selected="false">
                                 <!-- Single Video Widget -->
                                 <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="400ms">
                                     <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/17.jpg" alt="">
+                                        <a href="{% url 'GameShop:news_detail' new.id %}"><img src="{{ new.image }}" alt=""></a>
                                     </div>
                                     <div class="video-text">
-                                        <p class="video-title mb-0">Assemble Your Squad and Join the Battle</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
+                                        <p class="video-title mb-0"><a href="{% url 'GameShop:news_detail' new.id %}">{{ new.title }}</a></p>
+                                        <span>For all PC models</span>
                                     </div>
-                                    <div class="video-rating">8.3/10</div>
+                                    <div class="video-rating">{{new.comments.count}} comments</div>
                                 </div>
                             </a>
+                            {% endfor %}
 
-                            <a class="nav-link" id="video5" data-toggle="pill" href="#video-5" role="tab" aria-controls="video-5" aria-selected="false">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="500ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/18.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Tips to improve your game</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
-
-                            <a class="nav-link" id="video6" data-toggle="pill" href="#video-6" role="tab" aria-controls="video-6" aria-selected="false">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="600ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/14.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Game reviews: the best of 2018</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
-
-                            <a class="nav-link" id="video7" data-toggle="pill" href="#video-7" role="tab" aria-controls="video-7" aria-selected="false">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="700ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/15.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Tips to improve your game</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
-
-                            <a class="nav-link" id="video8" data-toggle="pill" href="#video-8" role="tab" aria-controls="video-8" aria-selected="false">
-                                <!-- Single Video Widget -->
-                                <div class="single-video-widget d-flex wow fadeInUp" data-wow-delay="800ms">
-                                    <div class="video-thumbnail">
-                                        <img src="../../static/GameShop/img/bg-img/16.jpg" alt="">
-                                    </div>
-                                    <div class="video-text">
-                                        <p class="video-title mb-0">Game reviews: the best of 2018</p>
-                                        <span>Nintendo Wii, PS4, XBox 360</span>
-                                    </div>
-                                    <div class="video-rating">8.3/10</div>
-                                </div>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -475,8 +368,8 @@
                         {% for new in news %}
                         <div class="single-articles-area style-2 d-flex flex-wrap mb-30 wow fadeInUp" data-wow-delay="300ms">
                             <div class="article-thumbnail">
-{#                                <img src="../../static/GameShop/img/bg-img/6.jpg" alt="">#}
-                                <a href="#"> <img src="{{ new.image }}" width="300" height="300" alt=""></a>
+                                <img src="../../static/GameShop/img/core-img/untitled.png" alt="">
+{#                                    <a href="#"> <img src="{{ new.image}}" width="300" height="300" alt=""></a>#}
                             </div>
                             <div class="article-content">
                                 <a href="{% url 'GameShop:news_detail' new.id %}" class="post-title">{{ new.title }}</a>

@@ -1,6 +1,8 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.template.context_processors import csrf
+
 from UserApp.forms import RegistrationForm, AccountAuthenticationForm
 from GameShop.urls import path
 
@@ -36,6 +38,10 @@ def login_view(request):
     user = request.user
     if user.is_authenticated:
         return redirect('GameShop:index')
+    # if user.is_active == False:
+    #     # user.is_anonymous = True
+    #     HttpResponse('You are banned')
+    #     return redirect('GameShop:index')
     if request.POST:
         form = AccountAuthenticationForm(request.POST)
         if form.is_valid():
@@ -48,4 +54,5 @@ def login_view(request):
     else:
         form = AccountAuthenticationForm()
     context['login_form'] = form
+    # context.update(csrf(request))
     return render(request, 'UserApp/login.html', context)
