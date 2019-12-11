@@ -21,14 +21,16 @@ def home(request):
     games = Games.objects.all()
     news = News.objects.all()
     ordered_games = Games.objects.order_by('-game_rate')
-    context = {'games': games, 'news': news, 'ordered_games': ordered_games}
+    category = Category.objects.all()
+    context = {'games': games, 'news': news, 'ordered_games': ordered_games, 'category': category}
+
     return render(request, 'GameShop/index.html', context)
 
 
 def comment(request):
     coments = Comment.objects.all()
     context = {'coments': coments}
-    return render(request, 'GameShop/news_detail.html', context)
+    return render(request, 'GameShop/single-post.html', context)
 
 
 def delete_user(request, user_id):
@@ -41,6 +43,11 @@ def delete_user(request, user_id):
     except:
         pass
     return render(request, 'GameShop/profile.html', {'users': users})
+
+
+def category_show(request):
+    cats = Category.objects.all()
+    return render(request, 'GameShop/categories.html', {'category': cats})
 
 
 def ban_user(request, user_id):
@@ -84,10 +91,6 @@ def search(request):
         pass
     # results = Games.objects.filter(Q(name__icontains=query))
     return HttpResponseRedirect('index')
-
-
-def balance(request, user_id):
-    user_acc = get_object_or_404(Profile, pk=user_id)
 
 
 def delete_comment(request, news_id):
@@ -234,10 +237,8 @@ def profile(request):
 
 
 def buy_game(request, game_id):
-    # orders = Order.items.get
     user_profile = get_object_or_404(Profile, user=request.user)
     item = Order.items.filter(order__owner=user_profile).all()
-    # item = Order.items.filter(id=kwargs.get('item_id', "")).first()
     if item in request.user.profile.items.all():
         messages.info(request, 'You already own this game')
         return redirect(reverse('GameShop:games_list'))
@@ -252,7 +253,6 @@ def game_list(request):
     egame = Games.objects.filter().order_by('-game_rate')
     if ord:
         s = [ord]
-    # profile = Profile.objects.get_or_create(user=request.user)
     filtered_orders = Order.objects.filter(owner=request.user.profile, is_ordered=True)
     current_order_products = []
     if filtered_orders.exists():
@@ -283,56 +283,12 @@ def delete_news(request, news_id):
 
 
 def recommendations(request):
-    # s = Order.items.filter(order__owner=request.user.username, game__genres=).all()
-    # g = Profile.items.filter(orderitem__order__owner=request.user)
-    # genre_list = g.values('genres__games__name')
-    g = Profile.items.filter(orderitem__order__owner=request.user).values('genres__genre_name')
-    genre_list = Order.items.filter(order__owner=request.user).values('game__genres__genre_name')
-    # if g.exists():
-    #     gg = g[0]
-    #     genre = gg.genres.all()
-    #     for genrx in genre:
-    #         genre_list.append(genrx)
-    # else:
-    #     genre_list.append("Ssss")
-    print(genre_list)
-    genre_list += 'S'
-    return render(request, 'GameShop/post.html', {'genre_list': genre_list})
+    userx = Order.items.filter(order__owner=request.user)
+    game = userx.values('game__category__name')
+    if game.exists():
+        g = game[0]
+        rec = Category.objects.filter(name__icontains=g)
+        return render(request, 'GameShop/game-review.html', {'rec': rec})
+    return render(request, 'GameShop/game-review.html', {'game':game})
     # pass
 
-
-def category_office(request):
-    categor_o = Category.objects.all()
-    return render(request, 'GameShop/categories.html', {'category_o': categor_o})
-
-
-def category_strategy(request):
-    category_s = Category.objects.all()
-    return render(request, 'GameShop/categories.html', {'category_s': category_s})
-
-
-def category_arcade(request):
-    category_arc = Category.objects.all()
-    return render(request, 'GameShop/categories.html', {'category_arc': category_arc})
-
-
-def category_action(request):
-    category_act = Category.objects.all()
-    return render(request, 'GameShop/categories.html', {'category_act': category_act})
-# def category(request, hierarchy=None):
-#     category_slug = hierarchy.split('/')
-#     category_queryset = list(Category.objects.all())
-#     all_slugs = [x.slug for x in category_queryset]
-#     parent = None
-#     for slug in category_slug:
-#         if slug in all_slugs:
-#             parent = get_object_or_404(Category, slug=slug, parent=parent)
-#         else:
-#             instance = get_object_or_404(Games, slug=slug)
-#             breadcrumbs_link = instance.get_cat_list()
-#             category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
-#             breadcrumbs = zip(breadcrumbs_link, category_name)
-#             return render(request, "GameShop/index.html", {'instance': instance, 'breadcrumbs': breadcrumbs})
-#
-#     return render(request, "GameShop/categories.html",
-#                   {'game_set': parent.c, 'sub_categories': parent.children.all()})

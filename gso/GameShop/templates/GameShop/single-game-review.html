@@ -92,10 +92,9 @@
                                     <li><a href="{% url 'GameShop:index' %}">Home</a></li>
                                     <li><a href="{% url 'GameShop:game_list' %}">Games</a>
                                         <ul class="dropdown">
-                                            <li><a href="{% url 'GameShop:category_arcade' %}">Arcade</a></li>
-                                            <li><a href="{% url 'GameShop:category_office' %}">Office games</a></li>
-                                            <li><a href="{% url 'GameShop:category_action' %}">Action</a></li>
-                                            <li><a href="{% url 'GameShop:category_strategy' %}">Strategy</a></li>
+                                            {% for c in cats %}
+                                            <li><a href="{% url 'GameShop:category_arcade' %}">{{ c.n }}</a></li>
+                                            {% endfor %}
                                         </ul>
                                     </li>
                                     <li><a href="{% url 'GameShop:news_list' %}">Articles</a>

@@ -95,35 +95,14 @@
                                     <li><a href="{% url 'GameShop:index' %}">Home</a></li>
                                     <li><a href="{% url 'GameShop:game_list' %}">Games</a>
                                         <ul class="dropdown">
-                                            <li><a href="{% url 'GameShop:category_arcade' %}">Arcade</a></li>
-                                            <li><a href="{% url 'GameShop:category_office' %}">Office games</a></li>
-                                            <li><a href="{% url 'GameShop:category_action' %}">Action</a></li>
-                                            <li><a href="{% url 'GameShop:category_strategy' %}">Strategy</a></li>
+
+                                            <li><a href="{% url 'GameShop:category' %}">Category</a></li>
+
                                         </ul>
                                     </li>
-{#                                    <li><a href="#">Pages</a>#}
-{#                                        <ul class="dropdown">#}
-{#                                            <li><a href="index.html">Home</a></li>#}
-{#                                            <li><a href="post.html">Articles</a></li>#}
-{#                                            <li><a href="single-post.html">Single Articles</a></li>#}
-{#                                            <li><a href="game-review.html">Game Review</a></li>#}
-{#                                            <li><a href="single-game-review.html">Single Game Review</a></li>#}
-{#                                            <li><a href="contact.html">Contact</a></li>#}
-{#                                        </ul>#}
                                     </li>
                                    <li><a href="{% url 'GameShop:news_list' %}">Articles</a>
-{#                                        <ul class="dropdown">#}
-{#                                            <li><a href="post.html">Articles</a></li>#}
-{#                                            <li><a href="single-post.html">Single Articles</a></li>#}
-{#                                        </ul>#}
                                     </li>
-{#                                    <li><a href="single-game-review.html">Reviews</a>#}
-{#                                        <ul class="dropdown">#}
-{#                                            <li><a href="game-review.html">Game Review</a></li>#}
-{#                                            <li><a href="single-game-review.html">Single Game Review</a></li>#}
-{#                                        </ul>#}
-{#                                    </li>#}
-{#                                    <li><a href="contact.html">Contact</a></li>#}
                                 </ul>
                             </div>
                             <!-- Nav End -->
@@ -168,8 +147,8 @@
                 <div class="col-12 col-lg-8">
                     <div class="mt-100">
                         <div class="post-details-content mb-100">
-                            <div class="blog-thumbnail mb-50">
-                                <img src="{{news.image}}" alt="">
+                            <div class="blog-thumbnail mb-50" size="20">
+                                <img src="{{news.image.url}}"  width="4cm" height="5cm" alt="">
                             </div>
                             <div class="blog-content">
                                 <h4 class="post-title">{{news.title}}</h4>

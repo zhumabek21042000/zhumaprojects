@@ -92,10 +92,7 @@
                                     <li><a href="{% url 'GameShop:index' %}">Home</a></li>
                                     <li><a href="{% url 'GameShop:game_list' %}">Games</a>
                                         <ul class="dropdown">
-                                            <li><a href="{% url 'GameShop:category_arcade' %}">Arcade</a></li>
-                                            <li><a href="{% url 'GameShop:category_office' %}">Office games</a></li>
-                                            <li><a href="{% url 'GameShop:category_action' %}">Action</a></li>
-                                            <li><a href="{% url 'GameShop:category_strategy' %}">Strategy</a></li>
+                                            <li><a href="{% url 'GameShop:category' %}">Category</a></li>
                                         </ul>
                                     </li>
                                    <li><a href="{% url 'GameShop:news_list' %}">Articles</a>
@@ -147,11 +144,10 @@
                 <div class="col-12">
 
                     <!-- *** Single Review Area *** -->
-                <p>Arcade</p>
                     {% for new in object_list %}
                     <div class="single-game-review-area d-flex flex-wrap mb-30">
                         <div class="game-thumbnail">
-                            <img src="{{ new.image }}" alt="">
+                            <img src="../../static/GameShop/img/core-img/untitled.png" size="40" alt="">
                         </div>
                         <div class="game-content">
                             <a href="{% url 'GameShop:news_detail' new.id %}" class="game-title">{{ new.title }}</a>
@@ -246,11 +242,14 @@
                             <div class="widget-content">
                                 <nav>
                                     <ul>
-                                        <li><a href="#">Doom</a></li>
+
+
+
                                         <li><a href="#">Grand Theft Auto</a></li>
-                                        <li><a href="#">Bloodborne</a></li>
-                                        <li><a href="#">God of war</a></li>
-                                        <li><a href="#">Persona 5</a></li>
+{#                                        <li><a href="#">Bloodborne</a></li>#}
+{#                                        <li><a href="#">God of war</a></li>#}
+{#                                        <li><a href="#">Persona 5</a></li>#}
+
                                     </ul>
                                 </nav>
                             </div>
