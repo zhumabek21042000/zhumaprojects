@@ -17,12 +17,6 @@
             {% endif %}
 
     </div>
-{#{% if request.user.is_admin %}#}
-{#{% for users in userx %}#}
-{#       {{ users }}#}
-{#        <h1>dqwdwqd</h1>#}
-{#{% endfor %}#}
-{#{% endif %}#}
     <div clas="right">
         <div class="info">
             
@@ -40,8 +34,6 @@
                     <p>{{ request.user.email }}</p>
                  </div>
                  <div class="data">
-                   <h4>Balance</h4>
-                    <p>{{ request.user.profile.balance }}</p>
               </div>
             </div>
         </div>
@@ -51,12 +43,6 @@
             <h3>Games</h3>
             <div class="projects_data">
                  <div class="data">
-                    <h4>Recent bought</h4>
-{#{% for game in user_games.all %}#}
-{#    {% for item in game %}#}
-{#        {{ item }}#}
-{#        {% endfor %}#}
-{#                     {% endfor %}#}
                  </div>
                  <div class="data">
                    <h4>Most Played</h4>
@@ -82,7 +68,7 @@
 {#                <a href="{% url 'GameShop:buygame' itemm.game.id %}">Buy game</a>#}
 
       	  </td>
-          <td>   {{ itemm.game.price }} Тенге <a href="{% url 'GameShop:delete_item' itemm.id %}">Delete game</a></td>
+          <td> <a href="{% url 'GameShop:delete_item' itemm.id %}">Delete game</a></td>
 
         </tr>
             {% endfor %}
@@ -105,38 +91,4 @@
 </div>
     </body>
 </html>
-
-
-{##}
-{#<table class="table table-hover table-bordered text-center">#}
-{#      <tr class="text-center">#}
-{#        <th>Date Ordered</th>#}
-{#        <th>Reference Code</th>#}
-{#        <th>Items</th>#}
-{#        <th>Price</th>#}
-{#      </tr>#}
-{#      {% for order in my_orders %}#}
-{#        <tr>#}
-{#          <td>{{ order.date_ordered }}</td>#}
-{#          <td>{{ order.ref_code }}</td>#}
-{#          <td>#}
-{#        	{% for item in order.items.all %}#}
-{#        		{{ item.product.name }}#}
-{#      		{% endfor %}#}
-{#      	  </td>#}
-{#          <td>${{ order.get_cart_total }}</td>#}
-{#        </tr>#}
-{#      {% empty %}#}
-{#        <tr>#}
-{#          <td colspan= 4> You have no orders.</td>#}
-{#        </tr>#}
-{#      {% endfor %}#}
-{#      <tr>#}
-{#        <td colspan=4>#}
-{#          <a href="{% url 'GameShop:game_list' %}" class="btn btn-warning pull-left">#}
-{#            {% if not order %}Continue Shopping{% else %}Add Items to Cart {% endif %}#}
-{#          </a>#}
-{#        </td>#}
-{#      </tr>#}
-{#    </table>#}
 {% endblock content %}

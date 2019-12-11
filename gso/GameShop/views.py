@@ -283,12 +283,8 @@ def delete_news(request, news_id):
 
 
 def recommendations(request):
-    userx = Order.items.filter(order__owner=request.user)
-    game = userx.values('game__category__name')
-    if game.exists():
-        g = game[0]
-        rec = Category.objects.filter(name__icontains=g)
-        return render(request, 'GameShop/game-review.html', {'rec': rec})
-    return render(request, 'GameShop/game-review.html', {'game':game})
+    games = Order.items.values('game__category__name')
+    game = Category.objects.filter(name__icontains=games)
+    return render(request, 'GameShop/recommendations.html', {'game': game})
     # pass
 

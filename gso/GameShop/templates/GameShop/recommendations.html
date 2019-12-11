@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load crispy_forms_tags %}
 
 <head>
     <meta charset="UTF-8">
@@ -10,10 +9,10 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Game Shop</title>
+    <title>GameShop</title>
 
     <!-- Favicon -->
-{#    <link rel="icon" href="img/core-img/favicon.ico">#}
+    <link rel="icon" href="../../static/GameShop/img/core-img/favicon.ico">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../../static/GameShop/style.css">
@@ -22,13 +21,13 @@
 
 <body>
     <!-- Preloader -->
-{#    <div class="preloader d-flex align-items-center justify-content-center">#}
-{#        <div class="spinner">#}
-{#            <div class="bounce1"></div>#}
-{#            <div class="bounce2"></div>#}
-{#            <div class="bounce3"></div>#}
-{#        </div>#}
-{#    </div>#}
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
 
     <!-- ##### Header Area Start ##### -->
     <header class="header-area">
@@ -39,23 +38,21 @@
                     <div class="col-12 d-flex align-items-center justify-content-between">
                         <!-- Logo Area -->
                         <div class="logo">
-
-{#                            <a href="index.html"><img src="../../static/GameShop/img/core-img/logo.png" alt=""></a>#}
+                            <a href="{% url 'GameShop:index' %}">Game Shop</a>
                         </div>
 
                         <!-- Search & Login Area -->
                         <div class="search-login-area d-flex align-items-center">
                             <!-- Top Search Area -->
                             <div class="top-search-area">
-                                <form action="{% url 'GameShop:search' %}" method="get">
-                                    {% csrf_token %}
+                                <form action="#" method="post">
                                     <input type="search" name="top-search" id="topSearch" placeholder="Search">
-                                    <button type="submit" class="btn"><i clasgs="fa fa-search"></i></button>
+                                    <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
                             <!-- Login Area -->
                             <div class="login-area">
-                                 {% if request.user.is_authenticated %}
+                                {% if request.user.is_authenticated %}
                                     <a href="{% url 'GameShop:profile'%}">{{ request.user.username }}</a>
                                     <a href="{% url 'GameShop:logout' %}">Logout</a>
                                     {% else %}
@@ -95,14 +92,16 @@
                                     <li><a href="{% url 'GameShop:index' %}">Home</a></li>
                                     <li><a href="{% url 'GameShop:game_list' %}">Games</a>
                                         <ul class="dropdown">
-
                                             <li><a href="{% url 'GameShop:category' %}">Category</a></li>
 
                                         </ul>
                                     </li>
+                                    <li><a href="{% url 'GameShop:news_list' %}">Articles</a>
                                     </li>
-                                   <li><a href="{% url 'GameShop:news_list' %}">Articles</a>
-                                    </li>
+                                    {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'GameShop:profile' %}">Profile</a></li>
+                                    {% endif %}
+                                </ul>
                                 </ul>
                             </div>
                             <!-- Nav End -->
@@ -125,121 +124,76 @@
     <!-- ##### Header Area End ##### -->
 
     <!-- ##### Breadcrumb Area Start ##### -->
-    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/23.jpg);">
+    <div class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/27.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <!-- Breadcrumb Text -->
                 <div class="col-12">
                     <div class="breadcrumb-text">
-                        <h2>Article</h2>
+                        <h2>Review</h2>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <!-- ##### Breadcrumb Area End ##### -->
 
-    <!-- ##### Post Details Area Start ##### -->
-    <section class="post-news-area section-padding-0-100">
+    <!-- ##### Game Review Area Start ##### -->
+    <section class="game-review-area section-padding-100">
         <div class="container">
-            <div class="row justify-content-center">
-                <!-- Post Details Content Area -->
-                <div class="col-12 col-lg-8">
-                    <div class="mt-100">
-                        <div class="post-details-content mb-100">
-                            <div class="blog-thumbnail mb-50" size="20">
-                                <img src="{{news.image }}"  width="4cm" height="5cm" alt="">
-                            </div>
-                            <div class="blog-content">
-                                <h4 class="post-title">{{news.title}}</h4>
-                                <div class="post-meta mb-30">
-                                    <a href="#" class="post-date">{{news.date}}</a>
-                                    <a href="#" class="post-author">{{news.author}}</a>
-                                    <a href="#" class="post-comments">{{ news.comments.count }} Comments</a>
-                                </div>
-                                <p><a>{{ new.text }}</a></p>
+            <div class="row">
+                <div class="col-12">
 
-                            </div>
+                    <!-- *** Single Review Area *** -->
+                <h1>Recommendations</h1>
+                    {% for g in game %}
+                    <div class="single-game-review-area d-flex flex-wrap mb-30">
+                        <div class="game-thumbnail">
+{#                            <img src="{{ g.name }}" alt="">#}
+                            <a href="#">{{ g.name }}</a>
                         </div>
-{% for comment in comments %}
-                        <!-- Comment Area Start -->
-                        <div class="comment_area clearfix mb-70">
-                            <h4 class="mb-50">Comments</h4>
+                    {% for s in g.all %}
+                        <div class="game-content">
+                            <span class="game-tag">Adventure</span>
 
-                            <ol>
-                                <!-- Single Comment Area -->
-                                <li class="single_comment_area">
-                                    <!-- Comment Content -->
-                                    <div class="comment-content d-flex">
-                                        <!-- Comment Author -->
-                                        <div class="comment-author">
-                                            <img src="../../static/GameShop/img/core-img/usericon.png" alt="author">
-                                        </div>
-                                        <!-- Comment Meta -->
-                                        <div class="comment-meta">
-                                            <a href="#" class="post-author">{{comment.user}}</a>
-                                            {% if request.user.is_admin or comment.user == request.user %}
-            <a href="{% url 'GameShop:delete_comment' comment.id %}" style="color:red;">Delete comment</a>
+                            <a href="{% url 'GameShop:games_detail' s.id %}" class="game-title">{{ s.name }}</a>
+                             {% if s in request.user.profile.items.all %}
+            <!-- add a button here to see the product -->
+                <h3>You own this</h3>
+            {% elif s in current_order_products %}
+            <a href="{% url 'GameShop:profile' %}" class="btn btn-warning">Go to Cart</a>
+            {% else %}
+            <a href="{% url 'GameShop:add_to_cart' s.id %}" class="btn btn-warning">Add to Cart</a>
             {% endif %}
-                                            <a href="#" class="post-date">{{comment.created_date}}</a>
-                                            <p>{{ comment.text }}</p>
-                                        </div>
+                            <div class="game-meta">
+                                <a href="{% url 'GameShop:games_detail' s.id %}" class="game-date">{{game.date_release}}</a>
+                            </div>
+                            <p>{{ game.description }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area d-flex align-items-center justify-content-between">
+                                <div class="rating-area text-center">
+                                    <h3>{{ s.game_rate }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
                                     </div>
-                                </li>
-                            </ol>
-                        </div>
-{% endfor %}
-                    {% if request.user.is_authenticated %}
-                        <div class="post-a-comment-area mb-30 clearfix" id="reply">
-                            <h4 class="mb-50">Leave a comment</h4>
-
-                            <!-- Reply Form -->
-                            <div class="contact-form-area">
-
-                                <form method="post">{% csrf_token %}
-                                    {{ comment_form | crispy }}
-                                    <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                    {% endif %}
-                    </div>
-                </div>
-
-                <!-- Sidebar Widget -->
-                <div class="col-12 col-sm-9 col-md-6 col-lg-4">
-                    <div class="sidebar-area mt-100">
-
-                        <!-- Single Widget Area -->
-                        <div class="single-widget-area add-widget">
-                            <a href="#"><img src="img/bg-img/add.png" alt=""></a>
-                            <!-- Side Img -->
-                            <img src="img/bg-img/side-img.png" class="side-img" alt="">
-                        </div>
-
-{% for new in all_news %}
-                        <!-- Single Widget Area -->
-                        <div class="single-widget-area post-widget">
-                            <h4 class="widget-title">Latest Posts</h4>
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="{{new.image}}" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="{% url 'GameShop:news_detail' new.id %}" class="post-title">{{new.title}}</a>
-                                    <span>For all PC</span>
                                 </div>
                             </div>
-{% endfor %}
-                        </div>
-
+                        </div>{% endfor %}
                     </div>
+
+                    {% endfor %}
+                    <!-- *** Single Review Area *** -->
+
+
                 </div>
             </div>
         </div>
     </section>
-    <!-- ##### Post Details Area End ##### -->
+    <!-- ##### Game Review Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
@@ -251,10 +205,10 @@
                     <div class="col-12 col-sm-6 col-lg-3">
                         <div class="single-footer-widget mb-70">
                             <div class="widget-title">
-                                <a href="index.html"><img src="img/core-img/logo2.png" alt=""></a>
+{#                                <a href="index.html"><img src="../../static/GameShop/img/core-img/logo2.png" alt=""></a>#}
                             </div>
                             <div class="widget-content">
-                                <p>Welcome!</p>
+                                <p>Thanks for your support,  we love you</p>
                             </div>
                         </div>
                     </div>
@@ -288,10 +242,10 @@
                             <div class="widget-content">
                                 <nav>
                                     <ul>
-                                        <li><a href="#">Testimanials</a></li>
+{#                                        <li><a href="#">Testimanials</a></li>#}
                                         <li><a href="#">Reviews</a></li>
                                         <li><a href="#">New Games</a></li>
-                                        <li><a href="#">Forum</a></li>
+{#                                        <li><a href="#">Forum</a></li>#}
                                         <li><a href="#">Contact</a></li>
                                     </ul>
                                 </nav>
@@ -353,15 +307,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
-{#    <script src="js/jquery/jquery-2.2.4.min.js"></script>#}
-{#    <!-- Popper js -->#}
-{#    <script src="js/bootstrap/popper.min.js"></script>#}
-{#    <!-- Bootstrap js -->#}
-{#    <script src="js/bootstrap/bootstrap.min.js"></script>#}
-{#    <!-- All Plugins js -->#}
-{#    <script src="js/plugins/plugins.js"></script>#}
-{#    <!-- Active js -->#}
-{#    <script src="js/active.js"></script>#}
+    <script src="../../static/GameShop/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="../../static/GameShop/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="../../static/GameShop/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="../../static/GameShop/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="../../static/GameShop/js/active.js"></script>
 </body>
 
 </html>

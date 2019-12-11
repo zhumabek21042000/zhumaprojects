@@ -28,7 +28,7 @@ class Games(models.Model):
     date_release = models.DateTimeField(default=django.utils.timezone.now)
     genres = models.ManyToManyField(Genre)
     mode = models.CharField(max_length=10)
-    price = models.FloatField(max_length=30)
+    # price = models.FloatField(max_length=30)
     game_rate = models.FloatField()
     description = models.TextField(max_length=1000, null=True)
     image = models.FileField(upload_to=upload_location, null=True, blank=True)
@@ -79,7 +79,7 @@ class OrderItem(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE, null=True)
-    balance = models.FloatField(default=0)
+    # balance = models.FloatField(default=0)
     items = models.ManyToManyField(Games, blank=True)
 
     def __str__(self):

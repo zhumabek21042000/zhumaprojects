@@ -220,7 +220,7 @@
                             <div class="meta-data">
                                 <a href="{% url 'GameShop:games_detail' game.id %}">Genre(s): <br/>{% for genre in game.genres.all %} {{ genre }}<br/>{% endfor %} </a>
                                 <a href="{% url 'GameShop:games_detail' game.id %}" style="color: sandybrown">Rate: {{ game.game_rate }}</a>
-                                <a href="{% url 'GameShop:games_detail' game.id %}"><br/>Price: {{ game.price }} Тенге</a>
+{#                                <a href="{% url 'GameShop:games_detail' game.id %}"><br/>Price: {{ game.price }} Тенге</a>#}
                             </div>
                         </div>
                 </div>
